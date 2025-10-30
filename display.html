@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Payroll Program</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body class="display-page">
+  <div class="display-box">
+    <h1>PAYROLL PROGRAM</h1>
+    <div id="output"></div>
+  </div>
+
+<script>
+const data = JSON.parse(localStorage.getItem("payrollData"))
+if(data){
+  const gross = data.rate * data.days
+  const sss = gross * 0.05
+  const pagibig = gross * 0.03
+  const philhealth = gross * 0.02
+  const tax = gross * 0.05
+  const totalDeduction = sss + pagibig + philhealth + tax
+  const net = gross - totalDeduction
+
+  document.getElementById("output").innerHTML = `
+    <p><b>ID:</b> ${data.id}</p>
+    <p><b>NAME:</b> ${data.lname}, ${data.fname} ${data.mname[0]}. </p>
+    <p><b>POSITION:</b> ${data.position}</p><br>
+    <p><b>RATE:</b> ${data.rate}</p>
+    <p><b>DAYS:</b> ${data.days}</p>
+    <p><b>GROSS PAY:</b> ${gross.toFixed(2)}</p><br>
+    <div class="deductions">
+      <p><b>DEDUCTIONS</b></p>
+      <p>SSS(5%): ${sss.toFixed(2)}</p>
+      <p>PAG-IBIG(3%): ${pagibig.toFixed(2)}</p>
+      <p>PHILHEALTH(2%): ${philhealth.toFixed(2)}</p>
+      <p>TAX(5%): ${tax.toFixed(2)}</p>
+      <p><b>TOTAL DEDUCTION:</b> ${totalDeduction.toFixed(2)}</p><br>
+      <p><b>NET PAY:</b> ${net.toFixed(2)}</p>
+    </div>
+  `
+}
+</script>
+</body>
+</html>
